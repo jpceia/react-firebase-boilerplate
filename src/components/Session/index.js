@@ -1,6 +1,2 @@
-const Session = () => (
-  <div>
-    <p>Session</p>
-  </div>
-);
-export default Session;
+import AuthUserContext from './context';
+export { AuthUserContext };
