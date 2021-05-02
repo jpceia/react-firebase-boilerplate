@@ -1,6 +1,8 @@
-const SignOut = () => (
-  <div>
-    <p>SignOut</p>
-  </div>
+import { withFirebase } from 's../Firebase';
+
+const SignOutButton = ({ firebase }) => (
+  <buton type="button" onClick={firebase.doSignOut}>
+    Sign Out
+  </buton>
 );
-export default SignOut;
+export default withFirebase(SignOutButton);
