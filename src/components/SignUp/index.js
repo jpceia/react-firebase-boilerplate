@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
@@ -19,6 +19,8 @@ const INITIAL_STATE = {
   error: null,
 };
 
+
+// TODO: replace by functional version
 class SignUpFormBase extends Component {
   
   constructor(props) {
@@ -31,7 +33,12 @@ class SignUpFormBase extends Component {
     const { email, passwordOne } = this.state;
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
-      .then(authUser => this.setState({ ...INITIAL_STATE }))
+      .then(authUser => {
+        this.setState({ ...INITIAL_STATE })
+
+        // TODO: replace with useHistory hook
+        this.props.history.push(ROUTES.HOME);
+      })
       .catch(error => this.setState({ error }));
   }
   
@@ -49,6 +56,8 @@ class SignUpFormBase extends Component {
       error,
     } = this.state;
 
+    // The user is only allowed to sign up if both passwords are the same, and
+    // if the username, email and at least one password are filled with a string
     const isInvalid =
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
@@ -99,7 +108,7 @@ const SignUpLink = () => (
   </p>
 );
 
-const SignUpForm = withFirebase(SignUpFormBase);
+const SignUpForm = withRouter(withFirebase(SignUpFormBase));
 
 export default SignUpPage;
 export { SignUpForm, SignUpLink };
