@@ -3,4 +3,5 @@ const AccountPage = () => (
     <p>Account</p>
   </div>
 );
+
 export default AccountPage;

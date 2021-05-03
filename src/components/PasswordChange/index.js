@@ -1,6 +1,6 @@
-const Landing = () => (
+const PasswordChange = () => (
   <div>
-    <p>Landing</p>
+    <p>PasswordChange</p>
   </div>
 );
-export default Landing;
+export default PasswordChange;
