@@ -1,5 +1,5 @@
 import { PasswordForgetForm } from '../PasswordForget';
-import { PasswordChangeForm } from '../PasswordChange';
+import PasswordChangeForm from '../PasswordChange';
 
 const AccountPage = () => (
   <div>
