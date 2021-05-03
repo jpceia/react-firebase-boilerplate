@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { withFirebase } from '../Firebase';
 
 import * as ROUTES from '../../constants/routes';
-import { compose } from 'recompose';
 
 
 const SignUpPage = () => (
@@ -22,26 +21,29 @@ const INITIAL_STATE = {
   error: null,
 };
 
-const SignUpFormBase = (props) => {
-  const [values, setValues] = useState({ ...INITIAL_STATE });
+const SignUpFormBase = ({firebase}) => {
+  const [state, setState] = useState({ ...INITIAL_STATE });
+  const history = useHistory();
 
   const onSubmit = event => {
     event.preventDefault();
-    const { email, passwordOne } = values;
+    const { email, passwordOne } = state;
     
-    props.firebase
+    firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
-        setValues({ ...INITIAL_STATE });
+        setState({ ...INITIAL_STATE });
 
-        // TODO: replace with useHistory hook
-        props.history.push(ROUTES.HOME);
+        history.push(ROUTES.HOME);
       })
-      .catch(error => setValues({ ...values, error }));
+      .catch(error => setState({ ...state, error }));
   }
   
   const onChange = event => {
-    setValues({ ...values, [event.target.name]: event.target.value });
+    setState({
+      ...state,
+      [event.target.name]: event.target.value
+    });
   };
 
   const {
@@ -50,7 +52,7 @@ const SignUpFormBase = (props) => {
     passwordOne,
     passwordTwo,
     error,
-  } = values;
+  } = state;
 
   // The user is only allowed to sign up if both passwords are the same, and
   // if the username, email and at least one password are filled with a string
@@ -104,10 +106,7 @@ const SignUpLink = () => (
   </p>
 );
 
-const SignUpForm = compose(
-  withRouter,
-  withFirebase
-)(SignUpFormBase);
+const SignUpForm = withFirebase(SignUpFormBase);
 
 export default SignUpPage;
 
