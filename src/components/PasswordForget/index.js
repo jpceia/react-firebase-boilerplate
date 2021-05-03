@@ -5,14 +5,12 @@ import { withFirebase } from '../Firebase';
 
 import * as ROUTES from '../../constants/routes';
 
-const PasswordForgetPage = () => {
-  return (
-    <div>
-      <h1>PasswordForget</h1>
-      <PasswordForgetForm />
-    </div>
-  );
-};
+const PasswordForgetPage = () => (
+  <div>
+    <h1>PasswordForget</h1>
+    <PasswordForgetForm />
+  </div>
+);
 
 const INITIAL_STATE = {
   email: '',
