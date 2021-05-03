@@ -4,14 +4,15 @@ import { Link } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 
 import * as ROUTES from '../../constants/routes';
-import { compose } from 'recompose';
 
-const PasswordForgetPage = () => (
-  <div>
-    <h1>PasswordForget</h1>
-    <PasswordForgetForm />
-  </div>
-);
+const PasswordForgetPage = () => {
+  return (
+    <div>
+      <h1>PasswordForget</h1>
+      <PasswordForgetForm />
+    </div>
+  );
+};
 
 const INITIAL_STATE = {
   email: '',
@@ -70,8 +71,8 @@ const PasswordForgetLink = () => (
   </p>
 );
 
-const PasswordForgetForm = compose(withFirebase)(PasswordForgetFormBase);
-
 export default PasswordForgetPage;
+
+const PasswordForgetForm = withFirebase(PasswordForgetFormBase);
 
 export { PasswordForgetForm, PasswordForgetLink };
