@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-import { withFirebase } from '../Firebase';
-
 import * as ROUTES from '../../constants/routes';
+import { FirebaseContext } from '../Firebase';
 
 
 const SignUpPage = () => (
@@ -21,8 +20,9 @@ const INITIAL_STATE = {
   error: null,
 };
 
-const SignUpFormBase = ({firebase}) => {
+const SignUpForm = () => {
   const [state, setState] = useState({ ...INITIAL_STATE });
+  const firebase = useContext(FirebaseContext);
   const history = useHistory();
 
   const onSubmit = event => {
@@ -105,8 +105,6 @@ const SignUpLink = () => (
     Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
   </p>
 );
-
-const SignUpForm = withFirebase(SignUpFormBase);
 
 export default SignUpPage;
 

@@ -1,10 +1,12 @@
-import { withAuthorization } from "../Session";
+import { AuthorizationGuard } from "../Session";
 
 const HomePage = () => (
-  <div>
-    <p>Home</p>
-    <p>The Home Page is accessible by every signed in user.</p>
-  </div>
+  <AuthorizationGuard condition={authUser => !!authUser}>
+    <div>
+      <p>Home</p>
+      <p>The Home Page is accessible by every signed in user.</p>
+    </div>
+  </AuthorizationGuard>
 );
 
-export default withAuthorization(authUser => !!authUser)(HomePage);
+export default HomePage;

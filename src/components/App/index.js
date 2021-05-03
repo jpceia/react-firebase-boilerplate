@@ -7,12 +7,12 @@ import PasswordForgetPage from '../PasswordForget';
 import HomePage from '../Home';
 import AccountPage from '../Account';
 import AdminPage from '../Admin';
+import { AuthenticationGuard } from '../Session';
 import * as ROUTES from '../../constants/routes';
-import { withAuthentication } from '../Session';
 
-const App = () => {
-  return (
-    <Router>
+const App = () => (
+  <Router>
+    <AuthenticationGuard>
       <Navigation />
       <hr />
       <Switch>
@@ -24,8 +24,8 @@ const App = () => {
         <Route path={ROUTES.ACCOUNT} component={AccountPage} />
         <Route path={ROUTES.ADMIN} component={AdminPage} />
       </Switch>
-    </Router>
-  );
-};
+    </AuthenticationGuard>
+  </Router>
+);
 
-export default withAuthentication(App);
+export default App;

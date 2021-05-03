@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { withFirebase } from '../Firebase';
+import { FirebaseContext } from '../Firebase';
 
 import * as ROUTES from '../../constants/routes';
 import { SignUpLink } from '../SignUp';
@@ -23,9 +23,9 @@ const INITIAL_STATE = {
   error: null,
 };
 
-// TODO: replace by functional version
-const SignInFormBase = ({ firebase }) => {
-  const [state, setState] = useState({ ...INITIAL_STATE })
+const SignInForm = () => {
+  const [state, setState] = useState({ ...INITIAL_STATE });
+  const firebase = useContext(FirebaseContext);
   const history = useHistory();
 
   const onSubmit = event => {
@@ -37,8 +37,6 @@ const SignInFormBase = ({ firebase }) => {
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
         setState({ ...INITIAL_STATE });
-
-        // TODO: replace with useHistory hook
         history.push(ROUTES.HOME);
       })
       .catch(error => setState({ ...state, error }));
@@ -78,8 +76,6 @@ const SignInFormBase = ({ firebase }) => {
     </form>
   );
 }
-
-const SignInForm = withFirebase(SignInFormBase);
 
 export { SignInForm };
 

@@ -1,15 +1,15 @@
 import * as ROLES from '../../constants/roles';
-import { withAuthorization } from '../Session';
+import { AuthorizationGuard } from '../Session';
 
 const AdminPage = () => (
-  <div>
-    <h1>Admin</h1>
-    <p>
-      Restricted area! Only users with the admin role are authorized.
-    </p>
-  </div>
+  <AuthorizationGuard condition={user => user && !!user.roles[ROLES.ADMIN]}>
+    <div>
+      <h1>Admin</h1>
+      <p>
+        Restricted area! Only users with the admin role are authorized.
+      </p>
+    </div>
+  </AuthorizationGuard>
 );
 
-const condition = authUser => authUser && !!authUser.roles[ROLES.ADMIN];
-
-export default withAuthorization(condition)(AdminPage);
+export default AdminPage;
