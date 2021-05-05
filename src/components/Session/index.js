@@ -5,9 +5,21 @@ import * as ROUTES from '../../constants/routes';
 
 const AuthorizationContext = createContext(null);
 
+const useSemiPersistentState = (key, initialState = null) => {
+  const [value, setValue] = useState(
+    JSON.parse(localStorage.getItem(key)) || initialState
+  );
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(value));
+    return () => localStorage.removeItem(key);
+  }, [value, key]);
+  return [value, setValue];
+};
+
+
 const AuthorizationWrapper = ({ children }) => {
   const firebase = useContext(FirebaseContext);
-  const [authUser, setAuthUser] = useState(null);
+  const [authUser, setAuthUser] = useSemiPersistentState('authUser');
 
   useEffect(() => {
     const listener = firebase.auth.onAuthStateChanged(
