@@ -21,15 +21,13 @@ const AuthorizationWrapper = ({ children }) => {
   const firebase = useContext(FirebaseContext);
   const [authUser, setAuthUser] = useSemiPersistentState('authUser');
 
-  useEffect(() => {
-    const listener = firebase.auth.onAuthStateChanged(
-      setAuthUser,
-      () => setAuthUser(null)
-    );
-    return () => {
-      listener()
-    }
-  }, [firebase.auth]);
+  useEffect(() => firebase.auth.onAuthStateChanged(
+    setAuthUser,
+    () => setAuthUser(null)
+  ), [
+    firebase.auth,
+    setAuthUser
+  ]);
 
   return (
     <AuthorizationContext.Provider value={authUser}>
@@ -46,18 +44,12 @@ const AuthorizationCheck = props => {
   const firebase = useContext(FirebaseContext);
   const { children, condition } = props;
 
-  useEffect(() => {
-    const listener = firebase.auth.onAuthStateChanged(
-      (auth) => {
-        if (!condition(auth))
-          history.push(auth ? ROUTES.HOME : ROUTES.SIGN_IN)
-      },
-      () => history.push(ROUTES.SIGN_IN)
-    );
-    return () => {
-      listener()
-    }
-  }, [
+  useEffect(() => firebase.auth.onAuthStateChanged((user) => {
+    if (!condition(user))
+      history.push(user ? ROUTES.HOME : ROUTES.SIGN_IN)
+  },
+    () => history.push(ROUTES.SIGN_IN)
+  ), [
     firebase.auth,
     history,
     condition
