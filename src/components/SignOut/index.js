@@ -6,9 +6,9 @@ const SignOutButton = () => {
   const firebase = useContext(FirebaseContext);
 
   return (
-    <buton type="button" onClick={firebase.doSignOut}>
+    <button type="button" onClick={firebase.doSignOut}>
       Sign Out
-    </buton>
+    </button>
   );
 }
 
