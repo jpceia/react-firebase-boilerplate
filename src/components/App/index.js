@@ -7,12 +7,12 @@ import PasswordForgetPage from '../PasswordForget';
 import HomePage from '../Home';
 import AccountPage from '../Account';
 import AdminPage from '../Admin';
-import { AuthenticationGuard } from '../Session';
+import { AuthorizationWrapper } from '../Session';
 import * as ROUTES from '../../constants/routes';
 
 const App = () => (
   <Router>
-    <AuthenticationGuard>
+    <AuthorizationWrapper>
       <Navigation />
       <hr />
       <Switch>
@@ -24,7 +24,7 @@ const App = () => (
         <Route path={ROUTES.ACCOUNT} component={AccountPage} />
         <Route path={ROUTES.ADMIN} component={AdminPage} />
       </Switch>
-    </AuthenticationGuard>
+    </AuthorizationWrapper>
   </Router>
 );
 
