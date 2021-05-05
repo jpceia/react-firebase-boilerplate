@@ -58,7 +58,7 @@ const SignInForm = () => {
         name="email"
         value={email}
         onChange={onChange}
-        type="text"
+        type="email"
         placeholder="Email Address"
       />
       <input
