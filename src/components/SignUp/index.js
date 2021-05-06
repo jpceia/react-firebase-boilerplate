@@ -41,6 +41,11 @@ const SignUpForm = () => {
     
     firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
+      .then(auth => firebase.user(auth.user.uid).set({
+        username,
+        email,
+        roles: []
+      }))
       .then(() => {
         setState({ ...INITIAL_STATE });
         history.push(ROUTES.HOME);
