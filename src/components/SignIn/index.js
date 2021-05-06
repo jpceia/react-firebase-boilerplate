@@ -12,6 +12,7 @@ const SignInPage = () => (
   <div>
     <h1>SignIn</h1>
     <SignInForm />
+    <SignInGoogle />
     <PasswordForgetLink />
     <SignUpLink />
   </div>
@@ -77,6 +78,40 @@ const SignInForm = () => {
   );
 }
 
-export { SignInForm };
+
+const SignInGoogle = () => {
+  const [error, setError] = useState(null);
+  const firebase = useContext(FirebaseContext);
+  const history = useHistory();
+
+  const onSubmit = event => {
+    event.preventDefault();
+    firebase.doSignInWithGoogle()
+      .then(socialAuthUser => {
+        const user = socialAuthUser.user;
+        // Create a user in Firestore
+        firebase.user(user.uid).set({
+          username: user.displayName,
+          email: user.email,
+          roles: []
+        });
+      })
+      .then(socialAuthUser => {
+        setError(null);
+        history.push(ROUTES.HOME);
+      })
+      .catch(setError)
+  }
+
+  return (
+    <form onSubmit={onSubmit}>
+      <button type="submit">Sign In with Google</button>
+      {error && <p>{error.message}</p>}
+    </form>
+  );
+}
+
+
+export { SignInForm, SignInGoogle };
 
 export default SignInPage;
