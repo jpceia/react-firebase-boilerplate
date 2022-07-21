@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import { FirebaseContext } from '../Firebase';
+import { useFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
 const AuthorizationContext = createContext(null);
