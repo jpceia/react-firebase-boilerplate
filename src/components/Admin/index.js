@@ -1,6 +1,6 @@
 import * as ROLES from '../../constants/roles';
-import { useContext, useEffect, useState } from 'react';
-import { FirebaseContext } from '../Firebase';
+import { useEffect, useState } from 'react';
+import { useFirebase } from '../Firebase';
 import { AuthorizationCheck } from '../Session';
 
 const condition = user => user && !!user.roles.includes(ROLES.ADMIN);
@@ -8,7 +8,7 @@ const condition = user => user && !!user.roles.includes(ROLES.ADMIN);
 const AdminPage = () => {
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
-  const firebase = useContext(FirebaseContext);
+  const firebase = useFirebase();
 
   useEffect(() => {
     setLoading(true);

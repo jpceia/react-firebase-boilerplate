@@ -1,12 +1,9 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-
-import { FirebaseContext } from '../Firebase';
-
-import * as ROUTES from '../../constants/routes';
+import { useFirebase } from '../Firebase';
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
-
+import * as ROUTES from '../../constants/routes';
 
 const SignInPage = () => (
   <div>
@@ -35,7 +32,7 @@ const ERROR_MSG_ACCOUNT_EXISTS = `
 
 const SignInForm = () => {
   const [state, setState] = useState({ ...INITIAL_STATE });
-  const firebase = useContext(FirebaseContext);
+  const firebase = useFirebase();
   const history = useHistory();
 
   const onSubmit = event => {
@@ -94,7 +91,7 @@ const SignInForm = () => {
 
 const SignInGoogle = () => {
   const [error, setError] = useState(null);
-  const firebase = useContext(FirebaseContext);
+  const firebase = useFirebase();
   const history = useHistory();
 
   const onSubmit = event => {

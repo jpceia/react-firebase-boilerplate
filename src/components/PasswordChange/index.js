@@ -1,5 +1,5 @@
-import { useContext, useState } from 'react';
-import { FirebaseContext } from '../Firebase';
+import { useState } from 'react';
+import { useFirebase } from '../Firebase';
 
 const INITIAL_STATE = {
   passwordOne: '',
@@ -8,7 +8,7 @@ const INITIAL_STATE = {
 };
 
 const PasswordChangeForm = () => {
-  const firebase = useContext(FirebaseContext);
+  const firebase = useFirebase();
   const [state, setState] = useState({ ...INITIAL_STATE });
 
   const onSubmit = event => {

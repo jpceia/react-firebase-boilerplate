@@ -1,9 +1,7 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
-import { FirebaseContext } from '../Firebase';
-
 import * as ROUTES from '../../constants/routes';
+import { useFirebase } from '../Firebase';
 
 const PasswordForgetPage = () => (
   <div>
@@ -19,7 +17,7 @@ const INITIAL_STATE = {
 
 const PasswordForgetForm = () => {
   const [state, setState] = useState({ ...INITIAL_STATE })
-  const firebase = useContext(FirebaseContext);
+  const firebase = useFirebase();
 
   const onSubmit = event => {
     event.preventDefault();

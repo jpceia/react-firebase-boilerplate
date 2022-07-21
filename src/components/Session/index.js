@@ -18,7 +18,7 @@ const useSemiPersistentState = (key, initialState = null) => {
 
 
 const AuthorizationWrapper = ({ children }) => {
-  const firebase = useContext(FirebaseContext);
+  const firebase = useFirebase();
   const [authUser, setAuthUser] = useSemiPersistentState('authUser');
 
   useEffect(() => firebase.onAuthUserListener(
@@ -41,7 +41,7 @@ const AuthorizationCheck = props => {
 
   const history = useHistory();
   const authUser = useContext(AuthorizationContext);
-  const firebase = useContext(FirebaseContext);
+  const firebase = useFirebase();
   const { children, condition } = props;
 
   useEffect(() => firebase.onAuthUserListener((user) => {

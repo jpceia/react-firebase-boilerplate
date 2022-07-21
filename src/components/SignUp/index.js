@@ -1,8 +1,7 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-
 import * as ROUTES from '../../constants/routes';
-import { FirebaseContext } from '../Firebase';
+import { useFirebase } from '../Firebase';
 
 
 const SignUpPage = () => (
@@ -32,7 +31,7 @@ const ERROR_MSG_ACCOUNT_EXISTS = `
 
 const SignUpForm = () => {
   const [state, setState] = useState({ ...INITIAL_STATE });
-  const firebase = useContext(FirebaseContext);
+  const firebase = useFirebase();
   const history = useHistory();
 
   const onSubmit = event => {
