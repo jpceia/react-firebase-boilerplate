@@ -4,6 +4,7 @@ import { useFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
 const AuthorizationContext = createContext(null);
+const useAuthorization = () => useContext(AuthorizationContext);
 
 const useSemiPersistentState = (key, initialState = null) => {
   const [value, setValue] = useState(
@@ -17,9 +18,9 @@ const useSemiPersistentState = (key, initialState = null) => {
 };
 
 
-const AuthorizationWrapper = ({ children }) => {
+const AuthorizationProvider = ({ children }) => {
   const firebase = useFirebase();
-  const [authUser, setAuthUser] = useSemiPersistentState('authUser');
+  const [ authUser, setAuthUser ] = useSemiPersistentState('authUser');
 
   useEffect(() => firebase.onAuthUserListener(
     setAuthUser,
@@ -40,7 +41,7 @@ const AuthorizationWrapper = ({ children }) => {
 const AuthorizationCheck = props => {
 
   const history = useHistory();
-  const authUser = useContext(AuthorizationContext);
+  const authUser = useAuthorization();
   const firebase = useFirebase();
   const { children, condition } = props;
 
@@ -58,4 +59,4 @@ const AuthorizationCheck = props => {
   return condition(authUser) ? children : null;
 }
 
-export { AuthorizationContext, AuthorizationWrapper, AuthorizationCheck };
+export { AuthorizationContext, useAuthorization, AuthorizationProvider, AuthorizationCheck };
